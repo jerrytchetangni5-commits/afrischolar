@@ -1,0 +1,12 @@
+# Fichiers Laravel à ignorer
+backend/vendor/
+backend/node_modules/
+backend/storage/logs/
+backend/.env
+
+# Fichiers Angular à ignorer
+frontend/node_modules/
+frontend/dist/
+
+# Fichiers système
+.DS_Store
