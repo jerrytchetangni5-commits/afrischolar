@@ -7,7 +7,7 @@ use App\Models\Scholarship;
 
 class ScholarshipController extends Controller
 {
-    //Landing page
+    //Landing page (la liste des bourses)
     public function index()
     {
         $scholarships = Scholarship::latest()->get();

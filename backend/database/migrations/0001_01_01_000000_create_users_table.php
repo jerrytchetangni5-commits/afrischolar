@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable(); // Pour vérifier l'email plus tard
             $table->string('password');
             $table->string('country')->nullable();
             $table->enum('role', ['student', 'admin'])->default('student');

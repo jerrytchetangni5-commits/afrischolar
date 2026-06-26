@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -16,7 +19,7 @@ class AuthController extends Controller
             'first_name' => 'required|string|max:225',
             'last_name' => 'required|string|max:225',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
             'country' => 'nullable|string|max:255'
         ]);
 
@@ -60,7 +63,7 @@ class AuthController extends Controller
         ]);
 
         //Find user
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first(); //first() retourne le premier resultat ou null si aucun trouvé
 
         // Check password
         if(!$user || !Hash::check($request->password, $user->password)){
@@ -102,5 +105,62 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Déconnexion réussie'
         ]);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if($status === Password::RESET_LINK_SENT){
+            return response()->json([
+                'success' => true,
+                'message' => 'Un lien de réinitialisation a été envoyé à votre adresse email.',
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => __($status),
+        ], 400);
+        
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+         $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+
+            function($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+         );
+
+         if ($status === Password::PASSWORD_RESET){
+            return response()->json([
+                'success' => true,
+                'message' => 'Mot de passe réinitialisé avec succès.'
+            ]);
+         }
+
+         return response()->json([
+            'success' => false,
+            'message' => 'Token invalide ou expiré.'
+         ]);
     }
 }
