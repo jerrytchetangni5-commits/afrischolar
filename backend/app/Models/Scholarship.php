@@ -12,14 +12,19 @@ class Scholarship extends Model
     protected $fillable = [
         'title',
         'country',
+        'region',
         'university',
         'field',
         'deadline',
         'description',
+        'is_funded',
+        'amount',
         'benefits',
+        'days_remaining',
         'requirements',
         'image',
         'link',
+        'source',
     ];
 
     protected $casts = [

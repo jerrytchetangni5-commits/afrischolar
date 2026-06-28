@@ -23,24 +23,3 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 
 
-Route::get('/debug-token/{email}', function ($email) {
-    $user = User::where('email', $email)->first();
-    if (!$user) {
-        return response()->json(['error' => 'Utilisateur non trouvé'], 404);
-    }
-    
-    // Générer un token brut
-    $token = Password::createToken($user);
-    
-    // Le sauvegarder en base (hashé) pour que le reset fonctionne
-    \Illuminate\Support\Facades\DB::table('password_reset_tokens')->updateOrInsert(
-        ['email' => $email],
-        ['token' => Hash::make($token), 'created_at' => now()]
-    );
-    
-    return response()->json([
-        'message' => 'Token généré ! Copie-le vite.',
-        'email' => $email,
-        'brut_token' => $token  // 👈 Voici le token à copier !
-    ]);
-});
