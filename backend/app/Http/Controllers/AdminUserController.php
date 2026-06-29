@@ -23,7 +23,24 @@ class AdminUserController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email', 
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'country' => 'nullable|string,max:100',
+            'role' => 'required|in:admin,student'
+        ]);
+
+        $user = User::create([
+            'first_name' => $request->first_name,          
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'country' => $request->country,
+            'role' => $request->role
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Utilisateur enregistrer'
         ]);
     }
     
