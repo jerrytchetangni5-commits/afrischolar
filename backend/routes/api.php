@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminScholarshipController;
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
 Route::get('/scholarships/search', [ScholarshipController::class, 'search']);
@@ -22,4 +24,20 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function(){
+    Route::prefix('users')->group(function(){
+        Route::get('/', [AdminUserController::class, 'index']);
+        Route::post('/', [AdminUserController::class, 'store']);
+        Route::get('/{id}', [AdminUserController::class, 'show']);
+        Route::put('/{id}', [AdminUserController::class, 'update']);
+        Route::delete('/{id}', [AdminUserController::class, 'destroy']);    
+    });
 
+    Route::prefix('scholarships')->group(function(){
+        Route::get('/', [AdminScholarshipController::class, 'index']);
+        Route::post('/', [AdminScholarshipController::class, 'store']);
+        Route::get('/{id}', [AdminScholarshipController::class, 'show']);
+        Route::put('/{id}', [AdminScholarshipController::class, 'update']);
+        Route::delete('/{id}', [AdminScholarshipController::class, 'destroy']);    
+    });
+});

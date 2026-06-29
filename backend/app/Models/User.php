@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 #[Fillable(['first_name', 'last_name', 'email', 'password', 'country', 'role'])]
 #[Hidden(['password', 'remember_token'])]
@@ -29,5 +30,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'http://localhost:4200/auth/reset-password?token=' . $token . '$email=' . $this->email;
+        $this->notify(new ResetPassword($url));
     }
 }
