@@ -14,7 +14,7 @@ class Scholarship extends Model
         'country',
         'region',
         'university',
-        'field',
+        'domain',
         'deadline',
         'description',
         'is_funded',

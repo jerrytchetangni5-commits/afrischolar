@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminScholarshipController;
 
@@ -40,4 +41,9 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function(){
         Route::put('/{id}', [AdminScholarshipController::class, 'update']);
         Route::delete('/{id}', [AdminScholarshipController::class, 'destroy']);    
     });
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [AdminController::class, 'profile']);
+    Route::put('/profile', [AdminController::class, 'updateProfile']);
 });
+

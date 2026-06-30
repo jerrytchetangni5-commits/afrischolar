@@ -34,7 +34,11 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'http://localhost:4200/auth/reset-password?token=' . $token . '$email=' . $this->email;
-        $this->notify(new ResetPassword($url));
+        ResetPassword::createUrlUsing(function($user, string $token){
+            $frontendUrl = env('FRONTEND_URL', 'http://localhost:4200');
+
+            return "{$frontendUrl}/auth/reset-password?token={$token}&email=" .urlencode($user->email);
+        });
+        $this->notify(new ResetPassword($token));
     }
 }
