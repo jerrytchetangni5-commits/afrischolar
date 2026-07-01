@@ -24,7 +24,7 @@ class Scholarship extends Model
         'requirements',
         'image',
         'link',
-        'source',
+        'source'
     ];
 
     protected $casts = [

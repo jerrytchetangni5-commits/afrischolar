@@ -12,7 +12,26 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\ResetPassword;
 
-#[Fillable(['first_name', 'last_name', 'email', 'password', 'country', 'role'])]
+#[Fillable([
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'country',
+    'role',
+    'nationality',
+    'birth_date',
+    'gender',
+    'study_level',
+    'study_domain',
+    'average',
+    'languages',
+    'english_level',
+    'skills',
+    'experiences',
+    'interests'
+
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -29,6 +48,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'languages' => 'array',
+            'skills' => 'array',
+            'experiences' => 'array',
+            'interests' => 'array',
+            'birth_date' => 'date',
+            'average' => 'decimal:2'
+
         ];
     }
 
