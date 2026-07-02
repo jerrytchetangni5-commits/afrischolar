@@ -44,7 +44,7 @@ class UserProfileController extends Controller
         $validated = $request->validate([
             'nationality' => 'nullable|string|max:100',
             'birth_date' => 'nullable|date',
-            'gender' => 'nullable|string',
+            'gender' => 'nullable|string|in:Homme,Femme',
             'study_level' => 'nullable|string',
             'study_domain' => 'nullable|string',
             'average' => 'nullable|numeric|min:0',
