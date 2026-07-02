@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminScholarshipController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
 Route::get('/scholarships/search', [ScholarshipController::class, 'search']);
@@ -18,6 +19,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user/profile', [UserProfileController::class, 'index']);
+    Route::put('/user/profile/recommendation', [UserProfileController::class, 'updateRecommendation']);
+    Route::put('/user/profile', [UserProfileController::class, 'update']);    
 });
 
 
