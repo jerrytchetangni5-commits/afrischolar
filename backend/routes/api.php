@@ -7,6 +7,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminScholarshipController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserRecommendationController;
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
 Route::get('/scholarships/search', [ScholarshipController::class, 'search']);
@@ -21,7 +24,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user/profile', [UserProfileController::class, 'index']);
     Route::put('/user/profile/recommendation', [UserProfileController::class, 'updateRecommendation']);
-    Route::put('/user/profile', [UserProfileController::class, 'update']);    
+    Route::put('/user/profile', [UserProfileController::class, 'update']);  
+    
+    Route::get('/user/favorites', [FavoriteController::class, 'index']);    
+    Route::post('/user/favorites/{scholarshipId}', [FavoriteController::class, 'toggle']); 
+
+    Route::get('/user/dashboard', [UserDashboardController::class, 'index']);
+
+    Route::get('/user/recommendation', [UserRecommendationController::class, 'index']);
 });
 
 

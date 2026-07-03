@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');               
             $table->string('country');        
             $table->string('university');
-            $table->string('field');
+            $table->string('domain');
             $table->date('deadline');
             $table->text('description');
             $table->text('benefits')->nullable(); //nullable = peut etre vide

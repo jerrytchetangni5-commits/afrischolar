@@ -23,6 +23,7 @@ return new class extends Migration
             $table->json('skills')->nullable();
             $table->json('experiences')->nullable();
             $table->json('interests')->nullable();
+            $table->json('destination_countries')->nullable();
 
         });
     }
@@ -44,8 +45,8 @@ return new class extends Migration
                 'english_level',
                 'skills',
                 'experiences',
-                'interests'
-
+                'interests',
+                'destination_countries'
             ]);
         });
     }

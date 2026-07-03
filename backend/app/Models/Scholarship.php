@@ -12,16 +12,20 @@ class Scholarship extends Model
     protected $fillable = [
         'title',
         'country',
-        'region',
         'university',
         'domain',
+        'level',
         'deadline',
         'description',
-        'is_funded',
+        'funding_type',
         'amount',
+        'currency',
         'benefits',
         'days_remaining',
         'requirements',
+        'min_average',
+        'required_english_level',
+        'languages',
         'image',
         'link',
         'source'
@@ -31,5 +35,11 @@ class Scholarship extends Model
         'deadline' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'languages' => 'array', 
     ];
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 };

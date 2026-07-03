@@ -9,10 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('scholarships', function (Blueprint $table) {
-            $table->string('region')->nullable()->after('country');
-            $table->boolean('is_funded')->default(false)->after('description');
-            $table->string('amount')->nullable()->after('is_funded');
+            $table->string('level')->nullable()->after('domain');
+            $table->enum('funding_type', ['full', 'partial', 'unfunded'])->nullable()->after('description');
+            $table->string('amount')->nullable()->after('funding_type');
+            $table->string('currency')->nullable()->after('amount');
             $table->integer('days_remaining')->nullable()->after('benefits');
+            $table->decimal('min_average', 4, 2)->nullable()->after('requirements');
+            $table->string('required_english_level')->nullable()->after('min_average');
+            $table->json('languages')->nullable()->after('required_english_level');
             $table->string('source')->nullable()->after('link');
         });
     }
@@ -21,10 +25,13 @@ return new class extends Migration
     {
         Schema::table('scholarships', function (Blueprint $table) {
             $table->dropColumn([
-                'region',
-                'is_funded',
+                'funding_type',
                 'amount',
+                'currency',
                 'days_remaining',
+                'min_average',
+                'required_english_level',
+                'languages',
                 'source'
             ]);
         });

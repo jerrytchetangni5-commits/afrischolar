@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,6 +53,7 @@ class User extends Authenticatable
             'skills' => 'array',
             'experiences' => 'array',
             'interests' => 'array',
+            'destination_countries' => 'array',
             'birth_date' => 'date',
             'average' => 'decimal:2'
 
@@ -66,5 +68,10 @@ class User extends Authenticatable
             return "{$frontendUrl}/auth/reset-password?token={$token}&email=" .urlencode($user->email);
         });
         $this->notify(new ResetPassword($token));
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
     }
 }
