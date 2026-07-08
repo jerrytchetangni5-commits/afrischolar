@@ -10,6 +10,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserRecommendationController;
+use App\Http\Controllers\CvController;
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
 Route::get('/scholarships/search', [ScholarshipController::class, 'search']);
@@ -22,18 +23,31 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/user/profile', [UserProfileController::class, 'index']);
     Route::put('/user/profile/recommendation', [UserProfileController::class, 'updateRecommendation']);
-    Route::put('/user/profile', [UserProfileController::class, 'update']);  
-    
+    Route::put('/user/profile', [UserProfileController::class, 'update']); 
+
     Route::get('/user/favorites', [FavoriteController::class, 'index']);    
     Route::post('/user/favorites/{scholarshipId}', [FavoriteController::class, 'toggle']); 
 
     Route::get('/user/dashboard', [UserDashboardController::class, 'index']);
+    Route::get('/user/recommendation', [UserRecommendationController::class, 'index']);    
 
-    Route::get('/user/recommendation', [UserRecommendationController::class, 'index']);
 });
 
+Route::prefix('cv')->group(function(){
+    Route::get('/templates', [CvController::class, 'templates']);
+    Route::post('/preview', [CvController::class, 'preview']);
+    Route::post('/download', [CvController::class, 'download']);
+
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/mycvs', [CvController::class, 'mycvs']);
+        Route::get('/mycvs/{id}/download', [CvController::class, 'downloadCv']);
+        Route::put('/mycvs/{id}', [CvController::class, 'update']);
+        Route::delete('/mycvs/{id}', [CvController::class, 'destroy']);
+    });
+});
 
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
@@ -60,4 +74,3 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function(){
     Route::get('/profile', [AdminController::class, 'profile']);
     Route::put('/profile', [AdminController::class, 'updateProfile']);
 });
-

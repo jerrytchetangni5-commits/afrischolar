@@ -5,7 +5,7 @@ use App\Models\Scholarship;
 
 class AfriScoreService
 {
-    private const WEIGHTS = [
+    private const WEIGHTS = [ //WEIGHTS définit l'importance relative de chaque critère
         'domain' => 45,
         'level' => 15,
         'languages' => 20,
@@ -21,11 +21,12 @@ class AfriScoreService
         $score += $this->scoreLanguages($user, $scholarship);
         $score += $this->scoreAverage($user, $scholarship);
         $score += $this->scoreEnglish($user, $scholarship);  
-        
-        return min(100, (int) round($score));
+        //$this->score... appel la méthode qui calcule ce score et l'ajoute au score totale
+        return min(100, (int) round($score)); 
+        //round arrondit à l'entier le plus proche puis int force la conversion en entier
     }
 
-    public function getScoreDetails (User $user, Scholarship $scholarship): array
+    public function getScoreDetails(User $user, Scholarship $scholarship): array
     {
         return[
             'total_score' => $this->calculateScore($user, $scholarship),
@@ -37,6 +38,7 @@ class AfriScoreService
                 'english' => $this->scoreEnglish($user, $scholarship),            
             ]
         ];
+        //retourne le score total et les détails à chaque niveau sous un format tableau
     }
 
     private function scoreDomain(User $user, Scholarship $scholarship): int
@@ -55,6 +57,7 @@ class AfriScoreService
         if(str_contains($userDomain, $scholarshipDomain) || str_contains($scholarshipDomain, $userDomain)){
             return (int) (self::WEIGHTS['domain'] / 2);
         }
+        //str_contains:fonction php vérifie si une chaine contient une sous chaine
 
         return 0;
     }
@@ -71,12 +74,13 @@ class AfriScoreService
         if(str_contains($requirements, $userLevel)){
             return self::WEIGHTS['level'];
         }
+        //on vérifie si le niveau de l'utilisateur est mentionné dans le texte(requirements) pas vraiment reco mmandé 
         return 0;
     }
 
     private function scoreLanguages(User $user, Scholarship $scholarship): int
     {
-        if (!$user->languages || !$scholarship->languages){
+        if ((!$user->languages || !$scholarship->languages) || (!$user->languages && !$scholarship->languages)){
             return 0;
         }
 
@@ -95,7 +99,10 @@ class AfriScoreService
         $userLanguages = array_map('strtolower', $userLanguages);
         $requiredLanguages = array_map('strtolower', $requiredLanguages);
 
+        //array_map('strtolower) retourne tt en miniscule pour la comparaison
+
         $matches = count(array_intersect($userLanguages, $requiredLanguages));
+        //array_intersect retourne l'intersetion des valeurs communes aux deux tableaux
 
         if($matches === 0){
             return 0;
