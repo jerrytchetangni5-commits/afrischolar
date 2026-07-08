@@ -1,17 +1,7 @@
-{{-- 📌 Déclare le document comme HTML5 --}}
 <!DOCTYPE html>
-
-{{-- 📌 Ouvre la balise HTML avec la langue française par défaut --}}
 <html lang="fr">
-
-{{-- 📌 Section head : contient les métadonnées et les styles CSS --}}
 <head>
-    {{-- 📌 Définit l'encodage des caractères en UTF-8 (pour les accents français) --}}
     <meta charset="UTF-8">
-    
-    {{-- 📌 Titre de la page (affiché dans l'onglet du navigateur) --}}
-    {{-- 📌 On utilise les données du formulaire pour personnaliser le titre --}}
-    {{-- 📌 L'opérateur ?? '' évite une erreur si la clé n'existe pas --}}
     <title>CV {{ $data['personal_info']['first_name'] ?? '' }} {{ $data['personal_info']['last_name'] ?? '' }}</title>
     
     {{-- 📌 Ouvre la balise style qui contient tout le CSS du CV --}}
@@ -193,37 +183,19 @@
         }
     </style>
 </head>
-
-{{-- 📌 Ouvre le corps de la page --}}
 <body>
-
-    {{-- 📌 Container principal du CV --}}
     <div class="cv-container">
-        
-        {{-- 📌 EN-TÊTE : Photo + Nom + Titre --}}
         <div class="header">
-            
-            {{-- 📌 Photo de profil (affiche les initiales si pas de photo) --}}
             <div class="photo">
-                {{-- 📌 Si une photo est fournie (URL ou base64), on l'affiche --}}
-                {{-- 📌 L'opérateur ?? '' évite une erreur si la clé n'existe pas --}}
                 @if(!empty($data['personal_info']['photo'] ?? null))
                     <img src="{{ $data['personal_info']['photo'] }}" alt="Photo">
-                {{-- 📌 Sinon, on affiche les initiales --}}
                 @else
-                    {{-- 📌 Récupère la première lettre du prénom en majuscule --}}
                     {{ strtoupper(substr($data['personal_info']['first_name'] ?? '', 0, 1)) }}
-                    {{-- 📌 Récupère la première lettre du nom en majuscule --}}
                     {{ strtoupper(substr($data['personal_info']['last_name'] ?? '', 0, 1)) }}
                 @endif
             </div>
-            
-            {{-- 📌 Contenu de l'en-tête (nom et titre) --}}
             <div class="header-content">
-                {{-- 📌 Affiche le prénom et le nom --}}
                 <h1>{{ $data['personal_info']['first_name'] ?? '' }} {{ $data['personal_info']['last_name'] ?? '' }}</h1>
-                {{-- 📌 Affiche le titre professionnel s'il existe --}}
-                {{-- 📌 L'opérateur ?? null évite une erreur si la clé n'existe pas --}}
                 @if(!empty($data['personal_info']['title'] ?? null))
                     <h2>{{ $data['personal_info']['title'] }}</h2>
                 @endif
