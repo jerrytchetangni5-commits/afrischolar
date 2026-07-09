@@ -37,7 +37,7 @@ class CustomResetPassword extends Notification
 
         return (new MailMessage)
             ->subject('Reset your password - Next')
-            ->greeting('<span style="color: #4A0F18; font-weight: 600;">Hello!</span>')
+            ->greeting(new HtmlString('<span style="color: #4A0F18; font-weight: 600;">Hello!</span>'))
             ->line('You are receiving this email because we received a password reset request for your Next account.')
             ->action('Reset Password', $url)
             ->line('This password reset link will expire in 60 minutes.')

@@ -10,7 +10,7 @@
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
-    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/next.png'))) }}" alt="Next" style="max-height: 50px;">
+    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/next.png'))) }}" alt="Next" style="max-height: 100px;">
 </a>
 </td>
 </tr>
