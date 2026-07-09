@@ -43,7 +43,7 @@ class CustomResetPassword extends Notification
             ->line('This password reset link will expire in 60 minutes.')
             ->line('If you did not request a password reset, no further action is required.')
             ->salutation('Regards,')
-            ->salutation('The Next Team\nMake by the gratest of all time Jerry and his assistant, little Hermione');
+            ->salutation('The Next Team - Make by the gratest of all time Jerry and his assistant, little Hermione');
     }
 
     /**
