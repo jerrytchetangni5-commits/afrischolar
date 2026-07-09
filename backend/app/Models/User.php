@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Auth\Notifications\ResetPassword;
+//use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\CustomResetPassword;
 
 #[Fillable([
     'first_name',
@@ -60,7 +61,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function sendPasswordResetNotification($token)
+    /*public function sendPasswordResetNotification($token)
     {
         ResetPassword::createUrlUsing(function($user, string $token){
             $frontendUrl = env('FRONTEND_URL', 'http://localhost:4200');
@@ -68,6 +69,11 @@ class User extends Authenticatable
             return "{$frontendUrl}/auth/reset-password?token={$token}&email=" .urlencode($user->email);
         });
         $this->notify(new ResetPassword($token));
+    }*/
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPassword($token));
     }
 
     public function favorites()

@@ -65,6 +65,65 @@ class CvController extends Controller
             ->header('Content-Disposition', 'attachment; filename="CV_' . str_replace(' ','_', $validated['name']) . '.pdf"');
     }
 
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'template_id' => 'required|exists:cv_templates,id',
+            'name' => 'required|string|max:50',
+            'data' => 'required|array'
+        ]);
+
+        if(auth()->check()){
+            $cv = Cv::create([
+                'user_id' => auth()->id(),
+                'template_id' => $template->id,
+                'name' => $validated['name'],
+                'data' => $validated['data'],
+                'last_downloaded_at' => now()
+            ]);
+        }    
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Cv crée et sauvegarder avec succès',
+            'data' => $cv
+        ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cv = Cv::where('user_id', auth()->id())->find($id);
+
+        if(!$cv){
+            return response()->json([
+                'success' => false,
+                'message' => 'Cv introuvable'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:50',
+            'data' => 'nullable|array'
+        ]);
+
+        if($request->has('data')){
+            $cv->data = array_merge($cv->data ?? [], $request->data);
+        }
+
+        if($request->has('name')){
+            $cv->name = $request->name;
+        }
+        $cv->save();
+        $cv->refresh();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cv modifier avec succès',
+            'data' => $cv 
+        ]);
+
+    }
     //CV SAUVRGARDE
     public function mycvs()
     {

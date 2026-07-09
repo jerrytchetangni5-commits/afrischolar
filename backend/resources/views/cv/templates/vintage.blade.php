@@ -269,7 +269,6 @@
                     <div class="skill-item">
                         <div class="skill-name">{{ is_array($skill) ? ($skill['name'] ?? '') : $skill }}</div>
                         <div class="skill-bar">
-                            <!-- Niveau par défaut à 75% si non renseigné -->
                             @php $level = is_array($skill) && isset($skill['level']) ? $skill['level'] : 75; @endphp
                             <span style="width:{{ $level }}%"></span>
                         </div>

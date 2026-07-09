@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>CV - {{ $data['personal_info']['first_name'] ?? '' }} {{ $data['personal_info']['last_name'] ?? '' }}</title>
+    <title>CV Luxury - {{ $data['personal_info']['first_name'] ?? '' }} {{ $data['personal_info']['last_name'] ?? '' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -160,7 +160,7 @@
         .boxed .section { margin-bottom: 28px; }
         .boxed .section:last-child { margin-bottom: 0; }
 
-        /* COMPETENCES */
+        /* COMPETENCES - avec barres */
         .skill { margin-bottom: 16px; }
         .skill:last-child { margin-bottom: 0; }
         .skill-name {

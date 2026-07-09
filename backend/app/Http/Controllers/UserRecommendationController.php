@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Scholarship;
-use App\Services\AfriScoreService;
+use App\Services\NextScoreService;
 class UserRecommendationController extends Controller
 {
     protected $scoreService; //propriété pour protéger le service
