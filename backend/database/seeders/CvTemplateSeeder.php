@@ -24,6 +24,33 @@ class CvTemplateSeeder extends Seeder
             ],
 
             [
+                'name' => 'Vintage',
+                'slug' => 'vintage',
+                'blade_view' => 'cv.templates.vintage',
+                'preview_image' => 'vintage.png',
+                'description' => 'Style rétro avec tons terre et élégance intemporelle',
+                'is_active' => true,
+            ],
+
+            [
+                'name' => 'Premium',
+                'slug' => 'premium',
+                'blade_view' => 'cv.templates.premium',
+                'preview_image' => 'premium.png',
+                'description' => 'Design moderne et épuré, idéal pour les profils professionnels',
+                'is_active' => true,
+            ],
+
+            [
+                'name' => 'Luxury',
+                'slug' => 'luxury',
+                'blade_view' => 'cv.templates.luxury',
+                'preview_image' => 'luxury.png',
+                'description' => 'Design sombre et élégant avec accents dorés, idéal pour les profils prestigieux',
+                'is_active' => true,
+            ],            
+
+            [
                 'name' => 'Classique',
                 'slug' => 'classic',
                 'blade_view' => 'cv.templates.classic',

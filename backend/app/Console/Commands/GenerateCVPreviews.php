@@ -8,22 +8,10 @@ use Spatie\Browsershot\Browsershot;
 
 class GenerateCVPreviews extends Command
 {
-    /**
-     * Nom de la commande (à taper dans le terminal)
-     */
     protected $signature = 'cv:generate-previews';
-
-    /**
-     * Description de la commande (affichée dans la liste)
-     */
     protected $description = 'Génère des captures d\'écran des templates CV pour la prévisualisation';
-
-    /**
-     * Exécution de la commande
-     */
     public function handle()
     {
-        // 📋 1. Données de test (un CV fictif complet)
         $testData = [
             'personal_info' => [
                 'first_name' => 'Jean',
@@ -71,55 +59,33 @@ class GenerateCVPreviews extends Command
                 ['name' => 'Sport']
             ],
         ];
-
-        // 🔍 2. Récupérer tous les templates actifs depuis la base de données
         $templates = CvTemplate::where('is_active', true)->get();
-
-        // 📁 3. Créer le dossier de destination s'il n'existe pas
         $destination = public_path('images/cv-templates');
         if (!is_dir($destination)) {
-            // 📂 Crée le dossier avec les permissions 0755 (lecture/écriture)
             mkdir($destination, 0755, true);
-            $this->info("📁 Dossier créé : {$destination}");
+            $this->info("Dossier créé : {$destination}");
         }
-
-        //  4. Boucle sur chaque template pour générer sa preview
         foreach ($templates as $template) {
             $this->info("📸 Génération de l'aperçu pour : {$template->name} ({$template->slug})");
-
             try {
-                // 🖌️ Générer le HTML du template avec les données de test
                 $html = view($template->blade_view, ['data' => $testData])->render();
-
-                // 📷 Prendre une capture d'écran avec Browsershot
                 $imageData = Browsershot::html($html)
-                    ->setNodeBinary('C:/Program Files/nodejs/node.exe')  // Chemin vers Node.js sur Windows
-                    ->setNpmBinary('C:/Program Files/nodejs/npm.cmd')   // Chemin vers npm sur Windows
-                    ->windowSize(800, 1000)  // Taille de la fenêtre virtuelle (largeur x hauteur en pixels)
-                    ->fullPage()             // Capture toute la page (pas juste la partie visible)
-                    ->screenshot();          // Génère un PNG (au lieu de PDF)
-
-                // 💾 Nom du fichier : slug du template + .png (ex: modern-blue.png)
+                    ->setNodeBinary('C:/Program Files/nodejs/node.exe')
+                    ->setNpmBinary('C:/Program Files/nodejs/npm.cmd')
+                    ->windowSize(800, 1000)
+                    ->fullPage()
+                    ->screenshot();
                 $filename = $template->slug . '.png';
                 $filepath = $destination . '/' . $filename;
-
-                // 📥 Sauvegarder l'image sur le disque
                 file_put_contents($filepath, $imageData);
-
-                // 🔗 Mettre à jour la base de données avec le nom du fichier
                 $template->update(['preview_image' => $filename]);
-
-                // ✅ Afficher un message de succès
-                $this->info("   ✅ Succès : {$filename} (" . round(filesize($filepath) / 1024, 2) . " KB)");
+                $this->info("Succès : {$filename} (" . round(filesize($filepath) / 1024, 2) . " KB)");
 
             } catch (\Exception $e) {
-                // ❌ En cas d'erreur, afficher le message
-                $this->error("   ❌ Erreur pour {$template->slug} : " . $e->getMessage());
+                $this->error("Erreur pour {$template->slug} : " . $e->getMessage());
             }
         }
-
-        // 🎉 Message de fin
-        $this->info('✅ Toutes les prévisualisations ont été générées !');
-        $this->info("📁 Dossier : " . $destination);
+        $this->info('Toutes les prévisualisations ont été générées !');
+        $this->info("Dossier : " . $destination);
     }
 }
