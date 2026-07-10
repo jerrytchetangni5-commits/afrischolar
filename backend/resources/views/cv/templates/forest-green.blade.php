@@ -28,21 +28,28 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             background: #EDEDED;
             font-family: 'Poppins', 'Segoe UI', Arial, Helvetica, sans-serif;
             display: flex;
             justify-content: center;
             padding: 40px;
+            min-height: 100vh;
         }
 
         .cv {
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm; /* 🔥 On fixe la hauteur pour remplir toute la page */
             background: var(--offwhite);
             box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* HEADER */
@@ -50,6 +57,7 @@
             display: grid;
             grid-template-columns: 270px 1fr;
             background: var(--dark);
+            flex-shrink: 0;
         }
 
         .header-photo {
@@ -139,17 +147,18 @@
         .content {
             display: grid;
             grid-template-columns: 270px 1fr;
+            flex: 1; /* 🔥 Prend tout l'espace restant */
         }
 
         .sidebar {
             background: var(--dark);
             color: var(--white);
-            padding: 38px 32px 50px 32px;
+            padding: 38px 32px 30px 32px;
         }
 
         .main {
             background: var(--offwhite);
-            padding: 42px 42px 50px 40px;
+            padding: 42px 42px 30px 40px;
         }
 
         .pill {
@@ -293,7 +302,6 @@
             color: var(--accent);
         }
 
-        /* skills - sans barres, liste simple */
         .skill-item {
             font-size: 13px;
             color: var(--text-dark);
@@ -309,6 +317,17 @@
             color: var(--accent);
         }
 
+        .cv-footer {
+            background: var(--dark);
+            color: var(--text-light);
+            text-align: center;
+            font-size: 10px;
+            padding: 8px 0;
+            flex-shrink: 0;
+            opacity: 0.7;
+            margin-top: auto;
+        }
+
         @media print {
             body {
                 padding: 0;
@@ -316,6 +335,7 @@
             }
             .cv {
                 box-shadow: none;
+                height: 100vh;
             }
         }
     </style>
@@ -432,6 +452,10 @@
 
         </main>
 
+    </div>
+
+    <div class="cv-footer">
+        CV généré par Next — {{ date('d/m/Y') }}
     </div>
 
 </div>

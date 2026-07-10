@@ -205,7 +205,7 @@ class CvController extends Controller
         return Browsershot::html($html)
             ->format('A4')
             ->showBackground()
-            ->margins(10, 10, 10, 10)
+            ->fitToPaper()
             ->waitUntilNetworkIdle()
             ->pdf();
     }

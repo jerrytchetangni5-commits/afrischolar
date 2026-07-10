@@ -21,21 +21,28 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             background: #EAEDF0;
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
             justify-content: center;
             padding: 40px;
+            min-height: 100vh;
         }
 
         .cv {
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm; /* 🔥 On fixe la hauteur pour remplir toute la page */
             background: var(--white);
             box-shadow: 0 20px 60px rgba(20, 30, 45, .2);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* HEADER */
@@ -45,6 +52,7 @@
             grid-template-columns: 1fr 300px;
             padding: 50px 40px 40px 45px;
             min-height: 250px;
+            flex-shrink: 0;
         }
 
         .name {
@@ -115,13 +123,14 @@
         .layout {
             display: grid;
             grid-template-columns: 270px 1fr;
+            flex: 1; /* 🔥 Prend tout l'espace restant */
         }
 
         /* SIDEBAR */
         .sidebar {
             background: var(--navy);
             color: var(--white);
-            padding: 35px 30px 50px 45px;
+            padding: 35px 30px 30px 45px;
         }
 
         .sidebar h2 {
@@ -194,7 +203,7 @@
 
         /* MAIN */
         main {
-            padding: 40px 45px 50px 40px;
+            padding: 40px 45px 30px 40px;
         }
 
         .section-title {
@@ -307,6 +316,18 @@
             color: var(--text-dark);
         }
 
+        /* 🔥 FOOTER pour remplir la page */
+        .cv-footer {
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-size: 10px;
+            padding: 8px 0;
+            flex-shrink: 0;
+            margin-top: auto;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         @media print {
             body {
                 padding: 0;
@@ -314,6 +335,7 @@
             }
             .cv {
                 box-shadow: none;
+                height: 100vh;
             }
         }
     </style>
@@ -482,6 +504,11 @@
 
             </main>
 
+        </div>
+
+        <!-- 🔥 FOOTER pour remplir la page -->
+        <div class="cv-footer">
+            CV généré par Next — {{ date('d/m/Y') }}
         </div>
 
     </div>
