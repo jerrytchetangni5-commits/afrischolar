@@ -9,7 +9,7 @@ class UserRecommendationController extends Controller
 {
     protected $scoreService; //propriété pour protéger le service
 
-    public function __construct(AfriScoreService $scoreService) //injection de AfriScoreService  via le constructeur
+    public function __construct(NextScoreService $scoreService) //injection de NextScoreService  via le constructeur
     {
         $this->scoreService = $scoreService;
     }

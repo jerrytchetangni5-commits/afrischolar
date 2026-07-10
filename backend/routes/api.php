@@ -11,10 +11,14 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserRecommendationController;
 use App\Http\Controllers\CvController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
+Route::get('/scholarships/countries', [ScholarshipController::class, 'countries']);
 Route::get('/scholarships/search', [ScholarshipController::class, 'search']);
+Route::get('/scholarships/countries/{country}/scholarships', [ScholarshipController::class, 'byCountry']);
 Route::get('/scholarships/{id}', [ScholarshipController::class, 'show']);
+
 
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -75,3 +79,5 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function(){
     Route::get('/profile', [AdminController::class, 'profile']);
     Route::put('/profile', [AdminController::class, 'updateProfile']);
 });
+
+Route::post('/contact', [ContactController::class, 'store']);

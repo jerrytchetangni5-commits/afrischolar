@@ -160,19 +160,22 @@
         .boxed .section { margin-bottom: 28px; }
         .boxed .section:last-child { margin-bottom: 0; }
 
-        /* COMPETENCES - avec barres */
-        .skill { margin-bottom: 16px; }
-        .skill:last-child { margin-bottom: 0; }
-        .skill-name {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12.5px;
-            color: var(--heading);
-            margin-bottom: 8px;
+        /* COMPETENCES - sans barres, liste simple */
+        .skill-item {
+            font-size: 13px;
+            color: var(--body);
+            margin-bottom: 10px;
+            padding-left: 18px;
+            position: relative;
         }
-        .skill-level { color: var(--accent); font-size: 11px; font-weight: 600; }
-        .bar { height: 5px; background: var(--track); border-radius: 20px; }
-        .bar span { height: 100%; display: block; background: var(--accent); border-radius: 20px; }
+        .skill-item::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 10px;
+            top: 2px;
+        }
 
         /* COORDONNEES */
         .contact-row {
@@ -310,21 +313,11 @@
                         <div class="section-title">Compétences</div>
 
                         @foreach($data['skills'] as $skill)
-                        <div class="skill">
-                            <div class="skill-name">
-                                <span>{{ is_array($skill) ? ($skill['name'] ?? '') : $skill }}</span>
-                                <span class="skill-level">
-                                    {{ is_array($skill) && isset($skill['level']) ? $skill['level'] : 'Avancé' }}
-                                </span>
-                            </div>
-                            <div class="bar">
-                                @php
-                                    $level = is_array($skill) && isset($skill['level'])
-                                        ? (int) str_replace(['%', 'Expert', 'Avancé', 'Intermédiaire', 'Débutant'], ['100', '90', '75', '55', '30'], $skill['level'])
-                                        : 75;
-                                @endphp
-                                <span style="width:{{ $level }}%;"></span>
-                            </div>
+                        <div class="skill-item">
+                            {{ is_array($skill) ? ($skill['name'] ?? '') : $skill }}
+                            @if(is_array($skill) && isset($skill['level']))
+                                — {{ $skill['level'] }}
+                            @endif
                         </div>
                         @endforeach
 

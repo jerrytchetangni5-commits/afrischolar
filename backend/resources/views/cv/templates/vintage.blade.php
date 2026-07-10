@@ -105,24 +105,24 @@
             color: var(--ink-soft);
         }
 
-        .skill-item { margin-bottom: 14px; }
-        .skill-item .skill-name {
+        /* Compétences - sans barres, liste simple */
+        .skill-item {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             font-size: 12px;
             color: var(--ink);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            padding-left: 14px;
+            position: relative;
         }
-        .skill-bar {
-            height: 6px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 3px;
-            overflow: hidden;
+        .skill-item::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--coffee-dark);
         }
-        .skill-bar span {
-            display: block;
-            height: 100%;
-            background: var(--coffee-dark);
-            border-radius: 3px;
+        .skill-item .skill-level {
+            color: var(--coffee-dark);
+            font-weight: bold;
         }
 
         .lang-item {
@@ -267,11 +267,10 @@
                 <h3>Compétences</h3>
                 @foreach($data['skills'] as $skill)
                     <div class="skill-item">
-                        <div class="skill-name">{{ is_array($skill) ? ($skill['name'] ?? '') : $skill }}</div>
-                        <div class="skill-bar">
-                            @php $level = is_array($skill) && isset($skill['level']) ? $skill['level'] : 75; @endphp
-                            <span style="width:{{ $level }}%"></span>
-                        </div>
+                        {{ is_array($skill) ? ($skill['name'] ?? '') : $skill }}
+                        @if(is_array($skill) && isset($skill['level']))
+                            <span class="skill-level">— {{ $skill['level'] }}</span>
+                        @endif
                     </div>
                 @endforeach
             </div>

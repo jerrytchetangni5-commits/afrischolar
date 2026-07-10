@@ -3,7 +3,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Scholarship;
 
-class AfriScoreService
+class NextScoreService
 {
     private const WEIGHTS = [ //WEIGHTS définit l'importance relative de chaque critère
         'domain' => 45,

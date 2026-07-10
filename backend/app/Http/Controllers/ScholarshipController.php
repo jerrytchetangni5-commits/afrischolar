@@ -40,11 +40,11 @@ class ScholarshipController extends Controller
         if($request->filled('country')){
             $query->where('country', 'LIKE', '%' . $request->country . '%');
         }
-        if($request->filled('field')){
-            $query->where('field', 'LIKE', '%' . $request->field . '%');
+        if($request->filled('domain')){
+            $query->where('domain', 'LIKE', '%' . $request->domain . '%');
         }
-        if($request->filled('university')){
-            $query->where('university', 'LIKE', '%' . $request->university . '%');
+        if($request->filled('level')){
+            $query->where('level', 'LIKE', '%' . $request->level . '%');
         }
 
         $results  = $query->orderBy('deadline', 'asc')->get();
@@ -52,5 +52,38 @@ class ScholarshipController extends Controller
             'success' => true,
             'data' => $results
         ]);
+    }
+
+    public function countries()
+    {
+        $counts = Scholarship::select('country', \DB::raw('count(*) as total'))
+            ->groupBy('country')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $counts
+        ]);
+    }
+
+    public function byCountry($country)
+    {
+        $scholarships = Scholarship::where('country', $country)
+            ->where('deadline', '>=', now())
+            ->orderBy('deadline', 'asc')
+            ->get();
+
+        if (!$scholarships->isEmpty()){
+            return response()->json([
+                'success' => true,
+                'data' => $scholarships
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Aucune bourse trouvée pour ce pays'
+        ], 404);
     }
 }
