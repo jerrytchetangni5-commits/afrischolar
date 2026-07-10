@@ -9,14 +9,40 @@ use Spatie\Browsershot\Browsershot;
 
 class CvController extends Controller
 {
-    public function templates()
+    /*public function templates()
     {
-        $templates = CvTemplate::where('is_active', true)->get();
+        $templates = CvTemplate::where('is_active', true)->get()
+            ->get()
+            ->makeHidden('name');
+
         return response()->json([
             'success' => true,
             'data' => $templates
         ]);
-    }
+    }*/
+
+    public function templates()
+{
+    $templates = CvTemplate::where('is_active', true)->get();
+
+    $data = $templates->map(function ($template) {
+        return [
+            'id' => $template->id,
+            'slug' => $template->slug,
+            'blade_view' => $template->blade_view,
+            'preview_image' => $template->preview_image,
+            'description' => $template->description,
+            'is_active' => $template->is_active,
+            'created_at' => $template->created_at,
+            'updated_at' => $template->updated_at,
+        ];
+    });
+
+    return response()->json([
+        'success' => true,
+        'data' => $data
+    ]);
+}
 
     public function preview(Request $request)
     {

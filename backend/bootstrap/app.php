@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+
+        //$middleware->api(throttle: '100,1');
+        $middleware->appendToGroup('api', \Illuminate\Routing\Middleware\ThrottleRequests::class . ':100,1');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

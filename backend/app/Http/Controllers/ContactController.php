@@ -13,7 +13,7 @@ class ContactController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|email|',
-            'phone_number' => 'nullable|string',
+            'phone_number' => 'required|string',
             'message' => 'required|string'
         ]);
 

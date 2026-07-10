@@ -55,6 +55,7 @@ Route::prefix('cv')->group(function(){
 });
 
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    //->withoutMiddleware([\Illuminate\Routing\Middleware\ThrottleRequests::class]);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 
