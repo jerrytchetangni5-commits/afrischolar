@@ -453,11 +453,6 @@
         </main>
 
     </div>
-
-    <div class="cv-footer">
-        CV généré par Next — {{ date('d/m/Y') }}
-    </div>
-
 </div>
 
 </body>

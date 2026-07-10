@@ -14,45 +14,47 @@ class GenerateCVPreviews extends Command
     {
         $testData = [
             'personal_info' => [
-                'first_name' => 'Jean',
-                'last_name' => 'Dupont',
+                'first_name' => 'Jinx',
+                'last_name' => 'KOFFI',
                 'photo' => null,
-                'birth_date' => '1995-05-15',
-                'gender' => 'Homme',
-                'email' => 'jean@mail.com',
-                'phone' => '+221 77 123 45 67',
-                'address' => 'Dakar, Sénégal',
-                'title' => 'Développeur Web',
+                'birth_date' => '2007-05-15',
+                'gender' => 'Femme',
+                'email' => 'jinxkoffi@mail.com',
+                'phone' => '+229 0192566778',
+                'address' => 'Cotonou, Bénin',
+                'title' => null,
             ],
             'summary' => 'Développeur web passionné par les technologies innovantes avec 3 ans d\'expérience.',
             'educations' => [
                 [
                     'degree' => 'Licence Informatique',
-                    'school' => 'UCAD',
-                    'city' => 'Dakar',
-                    'start_date' => '2020-09',
-                    'end_date' => '2023-06',
-                    'description' => 'Spécialisation en génie logiciel'
+                    'school' => 'ENEAM',
+                    'city' => 'Cotonou',
+                    'start_date' => '2024-09',
+                    'end_date' => '2027-06',
+                    'description' => 'Spécialisation informatique de gestion'
                 ]
             ],
             'experiences' => [
                 [
                     'position' => 'Développeur Laravel',
-                    'company' => 'AfriTech',
-                    'city' => 'Dakar',
-                    'start_date' => '2023-01',
-                    'end_date' => '2024-06',
+                    'company' => 'MAMERI',
+                    'city' => 'Calavi',
+                    'start_date' => '2026-01',
+                    'end_date' => '2027-06',
                     'description' => 'Création d\'API REST et maintenance d\'applications web.'
                 ]
             ],
             'skills' => [
                 ['name' => 'Laravel'],
                 ['name' => 'PHP'],
-                ['name' => 'MySQL']
+                ['name' => 'MySQL'],
+                ['name' => 'Angular'],
+                ['name' => 'IA']
             ],
             'languages' => [
                 ['language_name' => 'Français', 'language_level' => 'Natif'],
-                ['language_name' => 'Anglais', 'language_level' => 'B2']
+                ['language_name' => 'Anglais', 'language_level' => 'C2']
             ],
             'interests' => [
                 ['name' => 'Lecture'],
@@ -66,7 +68,7 @@ class GenerateCVPreviews extends Command
             $this->info("Dossier créé : {$destination}");
         }
         foreach ($templates as $template) {
-            $this->info("📸 Génération de l'aperçu pour : {$template->name} ({$template->slug})");
+            $this->info("Génération de l'aperçu pour : {$template->name} ({$template->slug})");
             try {
                 $html = view($template->blade_view, ['data' => $testData])->render();
                 $imageData = Browsershot::html($html)

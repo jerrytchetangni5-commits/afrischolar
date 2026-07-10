@@ -505,12 +505,6 @@
             </main>
 
         </div>
-
-        <!-- 🔥 FOOTER pour remplir la page -->
-        <div class="cv-footer">
-            CV généré par Next — {{ date('d/m/Y') }}
-        </div>
-
     </div>
 
 </body>
