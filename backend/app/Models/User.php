@@ -61,16 +61,10 @@ class User extends Authenticatable
         ];
     }
 
-    /*public function sendPasswordResetNotification($token)
-    {
-        ResetPassword::createUrlUsing(function($user, string $token){
-            $frontendUrl = env('FRONTEND_URL', 'http://localhost:4200');
-
-            return "{$frontendUrl}/auth/reset-password?token={$token}&email=" .urlencode($user->email);
-        });
-        $this->notify(new ResetPassword($token));
-    }*/
-
+    public function notifications()
+{
+    return $this->hasMany(Notification::class)->orderBy('sent_at', 'desc');
+}
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomResetPassword($token));

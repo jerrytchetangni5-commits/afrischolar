@@ -12,6 +12,10 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserRecommendationController;
 use App\Http\Controllers\CvController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AuthGoogleController;
+use App\Http\Controllers\GeminiController;
+use App\Http\Controllers\NotificationController;
+
 
 Route::get('/scholarships', [ScholarshipController::class, 'index']);
 Route::get('/scholarships/countries', [ScholarshipController::class, 'countries']);
@@ -23,11 +27,12 @@ Route::get('/scholarships/{id}', [ScholarshipController::class, 'show']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/auth/login', [AuthGoogleController::class, 'googleLogin']);
 
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    Route::get('/me', [AuthController::class, 'me']);
     Route::get('/user/profile', [UserProfileController::class, 'index']);
     Route::put('/user/profile/recommendation', [UserProfileController::class, 'updateRecommendation']);
     Route::put('/user/profile', [UserProfileController::class, 'update']); 
@@ -36,7 +41,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/user/favorites/{scholarshipId}', [FavoriteController::class, 'toggle']); 
 
     Route::get('/user/dashboard', [UserDashboardController::class, 'index']);
-    Route::get('/user/recommendation', [UserRecommendationController::class, 'index']);    
+    Route::get('/user/recommendation', [UserRecommendationController::class, 'index']);  
+    
+    Route::prefix('gemini')->group(function(){
+        Route::post('/chat', [GeminiController::class, 'chat']); 
+    });
 
 });
 
@@ -55,7 +64,6 @@ Route::prefix('cv')->group(function(){
 });
 
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-    //->withoutMiddleware([\Illuminate\Routing\Middleware\ThrottleRequests::class]);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 
