@@ -56,7 +56,6 @@ Route::prefix('cv')->group(function(){
 
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/mycvs', [CvController::class, 'mycvs']);
-        Route::post('/mycvs', [CvController::class, 'mycvs']);
         Route::get('/mycvs/{id}/download', [CvController::class, 'downloadCv']);
         Route::put('/mycvs/{id}', [CvController::class, 'update']);
         Route::delete('/mycvs/{id}', [CvController::class, 'destroy']);

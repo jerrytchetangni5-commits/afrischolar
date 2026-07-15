@@ -64,6 +64,6 @@ return [
     | Nombre maximal de messages conservés dans l'historique
     |--------------------------------------------------------------------------
     */
-    'max_history_length' => 10,
+    'max_history_length' => 5,
 
 ];
