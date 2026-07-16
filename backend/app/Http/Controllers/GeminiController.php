@@ -35,7 +35,6 @@ class GeminiController extends Controller
             ]);
         } catch (\Exception $e){
             \Log::error('GeminiController error: ' .$e->getMessage());
-            \Log::error('trace: ' . $e->getTraceAsString());
             return response()->json([
                 'success' => false,
                 'message' => 'Le service IA est indisponible pour le moment',
