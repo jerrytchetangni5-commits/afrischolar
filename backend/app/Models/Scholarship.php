@@ -18,14 +18,9 @@ class Scholarship extends Model
         'deadline',
         'description',
         'funding_type',
-        'amount',
-        'currency',
         'benefits',
-        'days_remaining',
         'requirements',
-        'min_average',
-        'required_english_level',
-        'languages',
+        'required_documents',
         'image',
         'link',
         'source'
@@ -35,7 +30,6 @@ class Scholarship extends Model
         'deadline' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'languages' => 'array', 
     ];
 
     public function favorites()

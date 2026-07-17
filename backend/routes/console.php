@@ -12,3 +12,10 @@ Artisan::command('inspire', function () {
 Schedule::command('notify:deadlines')
     ->dailyAt('11:30')
     ->withoutOverlapping();
+
+
+
+Schedule::command('scholarships:sync')
+    ->cron('0 3 */2 * *')  // Tous les 2 jours à 3h du matin
+    ->withoutOverlapping()
+    ->runInBackground();
